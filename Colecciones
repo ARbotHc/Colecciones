@@ -1,0 +1,165 @@
+public class Datos {
+
+ 
+
+    String nombre;
+
+    String apellidos;
+
+    String cedula;
+
+    int edad;
+
+ 
+
+    public Datos(String nombre, String apellidos, String cedula, int edad) {
+
+        this.nombre = nombre;
+
+        this.apellidos = apellidos;
+
+        this.cedula = cedula;
+
+        this.edad = edad;
+
+    }
+
+ 
+
+    public int getEdad() {
+
+        return edad;
+
+    }
+
+
+
+    public String toString() {
+
+        return "Nombre: " + nombre
+
+                + "\nApellidos: " + apellidos
+
+                + "\nCedula: " + cedula
+
+                + "\nEdad: " + edad
+
+                + "\n------------------------------------------\n";
+
+    }
+
+ 
+
+    public static void main(String[] args) {
+
+        List<Datos> array = new ArrayList();
+
+        for (int i = 1; i <= 3; i++) {
+
+            System.out.println("Capturando datos #" + i);
+
+            array.add(leerDatos());
+
+            System.out.println();
+
+        }
+
+ 
+
+//        /**
+
+//         * Test Data
+
+//         */
+
+//        List<Datos> array = new ArrayList();
+
+//        array.add(new Datos("j", "s", "9999", 34));
+
+//        array.add(new Datos("b", "j", "8888", 35));
+
+//        array.add(new Datos("a", "m", "1111", 23));
+
+
+//        List<Datos> ordenado = array
+
+//                .stream()
+
+//                .sorted(Comparator.comparingInt(Datos::getEdad).reversed())
+
+//                .collect(Collectors.toList());
+
+//        ordenado.forEach(System.out::println);
+
+
+        Datos[] array2 = new Datos[array.size()];
+
+        array.toArray(array2);
+
+        for (int i = array2.length - 1; i > 0; i--) {
+
+            for (int j = 0; j < i; j++) {
+
+                if (j + 1 <= i && array2[j].getEdad() < array2[j + 1].getEdad()) {
+
+                    Datos aux = array2[j];
+
+                    array2[j] = array2[j + 1];
+
+                    array2[j + 1] = aux;
+
+                }
+
+            }
+
+        }
+
+ 
+
+        for (Datos d : array2) {
+
+            System.out.println(d);
+
+        }
+
+    }
+
+ 
+
+    public static Datos leerDatos() {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+
+            System.out.print("Introduce el nombre: ");
+
+            String nombre = br.readLine();
+
+            System.out.print("Introduce los apellidos: ");
+
+            String apellidos = br.readLine();
+
+            System.out.print("Introduce la cedula: ");
+
+            String cedula = br.readLine();
+
+            System.out.print("Introduce la edad: ");
+
+            String edad = br.readLine();
+
+            return new Datos(nombre, apellidos, cedula, Integer.parseInt(edad));
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace(System.out);
+
+            System.out.println("Hubo un error de lectura, favor intentar de nuevo...");
+
+            return leerDatos();
+
+        }
+
+    }
+
+}
